@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirection vers mon dressing Vinted...</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; color: #333; }
+        .btn { display: inline-block; padding: 12px 24px; background: #00b0b9; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h2>Ouverture de Vinted en cours...</h2>
+    <p>Si l'application ne s'ouvre pas automatiquement, cliquez sur le bouton ci-dessous :</p>
+    <a href="https://www.vinted.fr/member/125356822" class="btn">Ouvrir mon dressing</a>
+
+    <script>
+        (function() {
+            var vintedId = "125356822"; 
+            
+            // Correction de l'URL de secours
+            var webUrl = "https://www.vinted.fr/member/" + vintedId;
+            var appUrl = "vinted://profile/" + vintedId; 
+            var androidIntent = "intent://profile/" + vintedId + "#Intent;scheme=vinted;package=fr.vinted;end;";
+
+            var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+            // 1. Détection Android
+            if (/android/i.test(userAgent)) {
+                window.location.href = androidIntent;
+                setTimeout(function() { window.location.href = webUrl; }, 1500);
+            } 
+            // 2. Détection iOS (iPhone/iPad)
+            else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                window.location.href = appUrl;
+                setTimeout(function() { window.location.href = webUrl; }, 1500);
+            } 
+            // 3. Ordinateurs ou autres
+            else {
+                window.location.href = webUrl;
+            }
+        })();
+    </script>
+</body>
+</html>
